@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,9 @@ export class GService {
   }
 
 
-  constructor() { }
+  constructor(private titleService: Title) {
+		this.setTitle('Fight corona');
+	}
 
   public getHttpOptions(): any {
     const httpOptions = {
@@ -40,6 +43,11 @@ export class GService {
     return httpOptions;
   }
 
+  public setTitle(newTitle: string) {
+    // permet de mettre un titre au site (dans l'inglet)
+    this.titleService.setTitle(newTitle);
+  }
+  
   public getParams(func: any, arg: any): any {
     /*
      *
