@@ -1,0 +1,13 @@
+.radio-label {
+   font-size: 1.5em; 
+   padding: 0.2em 0em 0.2em 0em;
+   position: relative;
+   top: -0.2em;
+   text-align: center;
+}
+
+.radio-button {
+   margin-left: 15px; 
+   height: 1.5em; 
+   width: 1.5em;
+}

@@ -1,0 +1,65 @@
+<section id="my-body">
+  <div *ngFor="let _question of questions?.results; let i=index">
+    <div *ngIf="current_question == i">
+      <mat-toolbar>
+        <mat-toolbar-row>
+          <h6 style="width: 100%; text-align: center;">Question {{i+1}}/{{questions?.count}}</h6>
+        </mat-toolbar-row>
+      </mat-toolbar>
+      <form [formGroup]="repForm" (ngSubmit)="repSubmit()">
+        <mat-card class="quiz-card my-2">
+          <mat-card-content style="text-align: center; width: 100%; margin: 5px;">
+            <h1 class="text-center">{{_question.libelle}}</h1>
+
+            <mat-radio-group class="radio-group" *ngIf="rep[i].type == type_question.bool; else other"
+              style="display: flex; flex-direction: column;">
+              <div>
+                <input type="radio" id="oui" class="radio-button" color="accent" name="choix" formControlName="choix"
+                  value="1">
+                <label for="oui" class="radio-label">OUI</label>
+              </div>
+
+              <div>
+                <input type="radio" id="non" class="radio-button" color="primary" name="choix" formControlName="choix"
+                  value="-1">
+                <label for="non" class="radio-label">NON</label>
+              </div>
+            </mat-radio-group>
+
+            <ng-template #other>
+
+              <div class="row" style="width: 100%;">
+                <div class="col-md-3"></div>
+                <mat-form-field class="col-md-6">
+                  <input class="col-12" matInput style="width: 100%;" placeholder="Entrer votre réponse" type="text"
+                    name="textuel" formControlName="textuel" />
+                </mat-form-field>
+                <div class="col-md-3"></div>
+              </div>
+            </ng-template>
+
+          </mat-card-content>
+          <div class="col-md-12" style="text-align: center;">
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4">
+                <button mat-raised-button color="secondary" type="button" (click)="setCurrentQuestionPrev(i-1)"
+                  style=" margin: 5px; width: 35%;">
+                  <mat-icon>navigate_before</mat-icon> Précédent
+                </button>
+                <button *ngIf="i < questions.count-1; else sendbtn" mat-raised-button color="primary" type="button"
+                  (click)="setCurrentQuestionNext(i+1)" style=" margin: 5px; width: 35%;">Suivant<mat-icon>navigate_next
+                  </mat-icon></button>
+                <ng-template #sendbtn>
+                  <button mat-raised-button color="primary" type="submit" style=" margin: 5px; width: 35%;">Envoyer
+                    &nbsp;<mat-icon>send</mat-icon></button>
+                </ng-template>
+              </div>
+              <div class="col-4"></div>
+            </div>
+          </div>
+        </mat-card>
+      </form>
+    </div>
+  </div>
+</section>

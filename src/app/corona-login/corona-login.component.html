@@ -1,0 +1,153 @@
+<!--<mat-form-field id="auth-field" color="accent" >
+    <input  matInput  placeholder="Nom d'utilisateur" [(ngModel)]="username"  name="username"  required>
+</mat-form-field>
+<mat-form-field id="auth-field" color="accent" >
+    <input  matInput  placeholder="Mot de passe" [(ngModel)]="password"  type="password"  name="password"  required>
+</mat-form-field>-->
+<div class="container-fluid" style="margin-top: 30px;">
+    <div class="row align-items-center">
+        <div class="col-md-6 col-lg-5 offset-lg-1">
+
+            <h3 class="category" style="width: 100%; text-align: center; font-weight: bolder; color: darkred;">Conseils
+            </h3>
+            <div class="container-fluid">
+                <ul class="list-icon">
+                    <li class="list-icon-item">
+                        <i class="list-icon-picture">
+                            <img src="../../assets/icon-washing-hands.svg" alt="">
+                        </i>
+                        <span>Lavez-vous
+                            <strong>très régulièrement</strong>
+                            les mains</span>
+                    </li>
+                    <li class="list-icon-item">
+                        <i class="list-icon-picture">
+                            <img src="../../assets/icon-cough.svg" alt="">
+                        </i>
+                        <span>Toussez ou éternuez
+                            <strong>dans votre coude ou dans un mouchoir</strong></span>
+                    </li>
+                    <li class="list-icon-item">
+                        <i class="list-icon-picture">
+                            <img src="../../assets/icon-wave.svg" alt="">
+                        </i>
+                        <span>Saluez
+                            <strong>sans serrer la main, n'embrassez personne</strong></span>
+                    </li>
+                    <li class="list-icon-item">
+                        <i class="list-icon-picture">
+                            <img src="../../assets/icon-tissues.svg" alt="">
+                        </i>
+                        <span>Utilisez un
+                            <strong>mouchoir à usage unique</strong>
+                            et jetez-le</span>
+                    </li>
+                    <li class="list-icon-item">
+                        <i class="list-icon-picture">
+                            <img src="../../assets/icon-mask.svg" alt="">
+                        </i>
+                        <span>
+                            <strong>Portez un masque</strong>
+                            si vous êtes malade.</span>
+                    </li>
+                    <li class="list-icon-item">
+                        <i class="list-icon-picture">
+                            <img src="../../assets/icon-house.svg" alt="">
+                        </i>
+                        <span><strong>Restez chez vous</strong>,
+                            évitez tout contact avec les autres. Certaines personnes transmettent le virus sans en
+                            ressentir les symptômes.
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-6 col-lg-5 offset-lg-1 row" style="margin-top: -20px;">
+            <mat-tab-group class="container-fluid" color="accent">
+                <mat-tab label="Connexion" class="row">
+                    <form [formGroup]="loginForm" (ngSubmit)="login()">
+                        <div class="col-md-12">
+                            <mat-form-field id="auth-field" color="accent">
+                                <input matInput placeholder="Numéro de téléphone"
+                                    name="contact" required formControlName="contact">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field id="auth-field" color="accent">
+                                <input matInput placeholder="Mot de passe" type="password"
+                                    name="password" required autocomplete="off" formControlName="password">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12" style="color: red; text-align: center; font-size: 1.25em;" *ngIf="errorMsg != null">{{ errorMsg }}</div>
+                        <div class="col-md-12" style="text-align: end;">
+                            <br />
+                            <!--<button mat-raised-button style="background-color: darkred;" (click)="onSignIn()"  color="accent">Se connecter</button>-->
+                            <button mat-raised-button style="background-color: darkred;" color="accent" type="submit">Se
+                                connecter</button>
+                        </div>
+                    </form>
+                </mat-tab>
+                <mat-tab label="Inscription" class="row">
+                    <form [formGroup]="registerForm" (ngSubmit)="register()">
+                        <div class="col-md-12">
+                            <mat-form-field id="auth-field" color="accent">
+                                <input matInput placeholder="Nom" formControlName="nom" name="nom" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field id="auth-field" color="accent">
+                                <input matInput placeholder="Prénom" formControlName="prenom" name="prenom">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field id="auth-field" color="accent">
+                                <input matInput placeholder="Numéro de téléphone" formControlName="contact"
+                                    name="contact" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field id="auth-field" color="accent">
+                                <input matInput placeholder="Mot de passe" formControlName="password" type="password"
+                                    name="password" required autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+                            <mat-form-field id="auth-field" color="accent">
+                                <input matInput placeholder="Retapez le mot de passe" formControlName="confpassword"
+                                    type="password" name="confpassword" required autocomplete="off">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12" style="color: red; text-align: center; font-size: 1.25em;" *ngIf="errorMsg != null">{{ errorMsg }}</div>
+                        <div class="col-md-12" style="text-align: end;">
+                            <br />
+                            <button mat-raised-button style="background-color: darkred;" type="submit"
+                                color="accent">S'inscrire</button>
+                        </div>
+                    </form>
+                </mat-tab>
+            </mat-tab-group>
+            <!--<div class="col-md-6">
+            <button mat-button>
+                Connexion <img style="color: white; height: 24px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAADk0lEQVRoge3ayYtdRRQG8F+i6X5RJOnWdLoVF0EXRsUhoBuNiDgHTaLowmEXdRUiKugm6FrajSj4hzhgwMYg6UTTiiZq29oRxGkRshJjTJTr4tTlXhq78+7wBkI+uDzee3W+89WtqlNVp4rzGC6sapFrHHfgNlyLqzCBi/EPTqTndxzGARzEHy1qqI0OnsY+/Ius4nMG72M7LuyzdrAWL+K3kqhTmMFe7MBmjGENLsKVuCn99zpm8XfJ/hc8n8r3BdtwrCTgMHZhXQ2uMezBtyW+b3BXK0qXQQfvlBx+jntb5H8QCyX+t/SgdSaF8Ax/YjcuaNsJRvAy/kq+PsaGtsg3YTERz+P6tohXwC34Ofk8hiuaEk4qKjErQmy/MIlDyffXTXx3FN1pVswH/cZ6fFXS0KlDkg/sef1tiaWYUkTJN6oab1MM7H6MibPhZpwWk+7Wbo3WKt7A7t7oqoVXhaZFjHZj8JJinuhFiK2LNTgitD17tsKj+DUVvqe3umrhMUVIXnFt9pRi2dEUEyLS7G+BK8dqEXwyUallsS8V2tXQ4QSOJq5PG3ItxSNi5t++XIFxsW84pd4CMEe5EkfT975iZ3L+UQOODYoBOS9m575jOgnYW9N+4C2R470k4uEatkPREjm+T0I2V7QbmpbIcUKIqbKuGqqWyJHvn0cq2MypnnBo8/kkF7K6cnWHC9n//dhG15pqLK0FnDODPQ+/y079K2DgLVMeI/Pp88YaPMdxt9hbXyPWbANrmR3ijc404Bh4yxBZv3zRuL4Bz1CMmQ+TgGca8pQr81lTUUvwqHjZK47lJ5PzuRYcTiSegy1w5eh6YzUqsuIZ7mtRQFt4XJdbXXghFf7C8CYfutrBdhRp0j2901UZrwlNP6iwHnwgGZ3EDT2RVQ1bFAm626savy0qs4BL29VVCZfjx6Rlug5BR6SFMpEVH0QSe0wxLg6omcSGjaJP5pXpZ8tMiTkoE5UZa0q4SVGZBfXWYlVxq2IaWBTdqxVsVHSzk+L0tRfHyaN4RXH0NoPL2nbSUQSADF+K6NYGVuEhxZ4ow5t6fPZ+v6Kr5Vn759Trw+NiAv6uxHcEd7YhtBt0RPfK+3Emkhf7xTnGTlwngsOI4sLAFpG7nRZrsNMl+5/EecxAbkCM4gl8ILYAVbMgZ/Cu6FaNlkNtXqpZJy7VbBX7/qvFRusSxaWa4+JSzZxI5RwSx3vncc7hP4flPPOS+eLxAAAAAElFTkSuQmCC"/>
+            </button>
+        </div>
+        <div class="col-md-6">
+            <button mat-button>
+                Inscription <img style="color: white; height: 24px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABMUlEQVRIie2Uv2oCQRDGfxG8YGmpibVgGUgjpgt5mJhYBHyDPIpNDiGFFkmRMv4BE8wD5A2SgKedhSl2F45ldk+9BRs/GBZ2Zr5vZnd24YhAqAF9INH2DNRDkv8CG8v+tC83+gK5sTiEQOIRWGQlF3KKb0IIvHl8r9vX4kYddaH28fwA5yEEQE1LjDrzBfAUkvxgOAXugQmw0jYG7oAoL/kZMMc9vp9AdRuiS+ARGAAvqcp95MY+XJ2UgC7wbSU8aH9HIGsCLWG/LbX+5ajoQsdMBZ+BvT+2BYaelss6ZmlVbiPdSWK/5GshwWCdqtJA+glOPBzeS2vomIngc+WPdvnsbvTaE3wt4ErYl2IzEaHmPGtMZ0BxHwFQj8gnMgMq+5IbRKg5H6Emawm8A7ekKv8H0TWSJL7xvC0AAAAASUVORK5CYII="/>
+            </button>
+        </div><br/>
+        <div class="col-md-12">
+            <mat-form-field id="auth-field" color="accent" >
+                <input  matInput  placeholder="Nom d'utilisateur" [(ngModel)]="username"  name="username"  required>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field id="auth-field" color="accent" >
+                <input  matInput  placeholder="Mot de passe" [(ngModel)]="password"  type="password"  name="password"  required>
+            </mat-form-field>
+        </div>-->
+
+        </div>
+    </div>
+</div>

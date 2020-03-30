@@ -1,0 +1,99 @@
+<div class="grid-container">
+    <h1 class="mat-h1"><a href="/dashboard"><mat-icon>keyboard_backspace</mat-icon></a>  Détails de l'analyse</h1>
+    <mat-grid-list cols="2" style="height: fit-content;">
+      <mat-grid-tile *ngFor="let card of cards | async, let i=index" [colspan]="card.cols" [rowspan]="card.rows">
+        <mat-card class="dashboard-card mat-elevation-z8" >
+          <mat-card-header>
+            <mat-card-title *ngIf="i==0">
+              Réponse au questions
+              <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item>Signaler</button>
+                <button mat-menu-item>Supprimer</button>
+              </mat-menu>
+            </mat-card-title>
+            <mat-card-title *ngIf="i==1">
+                Résultats
+                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item>Approuver</button>
+                  <button mat-menu-item>Désapprouver</button>
+                </mat-menu>
+              </mat-card-title>
+              <mat-card-title *ngIf="i==2">
+                <h2>Consignes</h2>
+                <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item>Valider</button>
+                  <button mat-menu-item>Supprimer</button>
+                </mat-menu>
+              </mat-card-title>
+          </mat-card-header>
+          <mat-card-content *ngIf="i==0" class="dashboard-card-content-0">
+            <div >
+                <h5>1. Avez-vous de la fièvre ?</h5><br/>
+                <mat-checkbox [checked]="true">Oui</mat-checkbox><br/>
+                <mat-checkbox>Non</mat-checkbox><br/><br/>
+                
+
+                <h5>2. Si vous avez une toux, est-elle sèche ?</h5><br/>
+                <mat-checkbox>Oui</mat-checkbox><br/>
+                <mat-checkbox [checked]="true">Non</mat-checkbox><br/><br/>
+
+                <h5>3. Avez-vous des difficultés à respirer ?</h5><br/>
+                <mat-checkbox [checked]="true">Oui</mat-checkbox><br/>
+                <mat-checkbox>Non</mat-checkbox><br/><br/>
+                
+
+                <h5>4. Etes-vous beaucoup fatigué ?</h5><br/>
+                <mat-checkbox>Oui</mat-checkbox><br/>
+                <mat-checkbox [checked]="true">Non</mat-checkbox><br/><br/>
+
+                <h5>5. Votre corps présente-t-il des douleurs à répétition ?</h5><br/>
+                <mat-checkbox [checked]="true">Oui</mat-checkbox><br/>
+                <mat-checkbox>Non</mat-checkbox><br/><br/>
+                
+
+                <h5>6. Votre nez coule-t-il ou est-il bouché ?</h5><br/>
+                <mat-checkbox>Oui</mat-checkbox><br/>
+                <mat-checkbox [checked]="true">Non</mat-checkbox><br/><br/>
+
+                <h5>7. Avez-vous la gorge irritée ?</h5><br/>
+                <mat-checkbox [checked]="true">Oui</mat-checkbox><br/>
+                <mat-checkbox>Non</mat-checkbox><br/><br/>
+                
+
+                <h5>8. Avez-vous fréquemment de la diarrhée ?</h5><br/>
+                <mat-checkbox>Oui</mat-checkbox><br/>
+                <mat-checkbox [checked]="true">Non</mat-checkbox><br/><br/>
+            </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="i==1" class="dashboard-card-content-1">
+            <div >
+                <h5>Vous présentez des symptômes évalués à près de:</h5>
+                <h2 style="color: darkred;">50%</h2>
+                <h5>des manifestations du Coronavirus</h5>
+            </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="i==2" class="dashboard-card-content">
+       
+            <div>
+                <h5 class="text-dark">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-  Nous vous conseillons donc de suivre un traitement médical dans les plus brefs délais!!!</h5><br/>
+                <h5 class="text-dark">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-  Et pour cela un médecin du corps médical situé dans votre zone vous contactera pour de plus amples informations.</h5><br/>
+                <h5 class="text-dark">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-  Gardez donc votre téléphone chargé et veuillez rester à l'écoute, merci pour votre confiance et à bientôt!</h5><br/>
+            </div>
+
+            
+          </mat-card-content>
+        </mat-card>
+        
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  

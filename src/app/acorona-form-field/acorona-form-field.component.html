@@ -1,0 +1,101 @@
+<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()" style="margin-top: 20px; margin-bottom: 20px; margin-left: 25%; margin-right: 25%; padding: 5px;">
+  <mat-card class="shipping-card">
+    <mat-card-header style="text-align: center;">
+      <mat-card-title> Veuillez renseiner vos informations propres afin de mieux vous faire suivre... </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Lieu de travail" formControlName="company">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Votre(vos) prénom(s)" formControlName="firstName">
+            <mat-error *ngIf="addressForm.controls['firstName'].hasError('required')">
+              Votre(vos) prénom(s) est(sont) <strong>requis</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Votre nom" formControlName="lastName">
+            <mat-error *ngIf="addressForm.controls['lastName'].hasError('required')">
+              Votre nom est <strong>requis</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Votre addresse" formControlName="address"></textarea>
+            <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
+              Votre addresse est <strong>requise</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="!hasUnitNumber">
+        <div class="col">
+          <button mat-button type="button" (click)="hasUnitNumber = !hasUnitNumber">
+            + Ajouter C/O, Appt, Résidence, Unité
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngIf="hasUnitNumber">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Votre deuxième addresse" formControlName="address2"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Votre ville" formControlName="city">
+            <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
+              La ville est <strong>requise</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Votre région" formControlName="state">
+              <mat-option *ngFor="let state of states" [value]="state.abbreviation">
+                {{ state.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addressForm.controls['state'].hasError('required')">
+              La région est <strong>requis</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput #postalCode maxlength="5" placeholder="Code postal" type="number" formControlName="postalCode">
+            <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col" >
+          <mat-radio-group formControlName="shipping" style="width:100%; margin-left: 30%; text-align: center;">
+            <mat-radio-button value="urgence" >Etat d'urgence</mat-radio-button>
+            <mat-radio-button value="symptomatique">Présentation de quelques symptômes</mat-radio-button>
+            <mat-radio-button value="suspect">Aspect douteux</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <p align="end"><button mat-raised-button color="accent" type="submit">Submit</button></p>
+    </mat-card-actions>
+  </mat-card>
+</form>
+

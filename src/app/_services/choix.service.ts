@@ -36,11 +36,10 @@ export class ChoixService {
 		);
 	}
 
-	public create(analyse: number, reponse: number, valeur: number, deleted: boolean = false) {
-		let params = this.G.getParams(this.update, arguments);
+	public create(analyse: string, question: string, valeur: string, reponse: string = null, deleted: boolean = false) {
 		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.post<any>(this.G.link.choix, params, this.G.getHttpOptions()).subscribe(
+				this.httpClient.post<any>(this.G.link.choix, { analyse, question, valeur, reponse, deleted }, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {
@@ -51,13 +50,10 @@ export class ChoixService {
 		);
 	}
 
-	public update(id: number, analyse: number, reponse: number, valeur: number, deleted: boolean = false) {
-		let params = this.G.getParams(this.update, arguments);
-		delete params.id;
-
+	public update(id: string, analyse: string, question: string, valeur: string, reponse: string = null, deleted: boolean = false) {
 		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.put<any>(this.G.link.choix + id + '/', params, this.G.getHttpOptions()).subscribe(
+				this.httpClient.put<any>(this.G.link.choix + id + '/', {analyse, question, valeur, reponse, deleted}, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {

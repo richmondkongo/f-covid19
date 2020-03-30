@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { GService } from '../global.service';
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class ReponseAdditionnelleService {
 
-  
-  constructor(private G: GService, private httpClient: HttpClient,) { }
 
-  public read() {
+	constructor(private G: GService, private httpClient: HttpClient, ) { }
+
+	public read() {
 		return new Promise(
 			(resolve, reject) => {
 				this.httpClient.get<any>(this.G.link.rep_add, this.G.getHttpOptions()).subscribe(
@@ -22,7 +22,7 @@ export class ReponseAdditionnelleService {
 				)
 			}
 		);
-	} 
+	}
 
 	public readById(id: string) {
 		return new Promise(
@@ -38,11 +38,10 @@ export class ReponseAdditionnelleService {
 		);
 	}
 
-	public create(user: number, information: string, deleted: boolean = false) {
-    let params = this.G.getParams(this.update, arguments);
+	public create(user: number, question: string, valeur: string, deleted: boolean = false) {
 		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.post<any>(this.G.link.rep_add, params, this.G.getHttpOptions()).subscribe(
+				this.httpClient.post<any>(this.G.link.rep_add, {user, question, valeur, deleted}, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {
@@ -51,22 +50,19 @@ export class ReponseAdditionnelleService {
 				)
 			}
 		);
-	} 
+	}
 
-	public update(id: number, user: number, information: string, deleted: boolean = false) {
-    let params = this.G.getParams(this.update, arguments);
-    delete params.id;
-    
-    return new Promise(
+	public update(id: number, user: number, question: string, valeur: string, deleted: boolean = false) {
+		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.put<any>(this.G.link.rep_add + id + '/', params, this.G.getHttpOptions()).subscribe(
+				this.httpClient.put<any>(this.G.link.rep_add + id + '/', {user, question, valeur, deleted}, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {
 						reject(err);
 					}
 				)
-			} 
+			}
 		);
 	}
 

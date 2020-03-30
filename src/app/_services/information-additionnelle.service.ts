@@ -39,10 +39,9 @@ export class InformationAdditionnelleService {
 	}
 
 	public create(libelle: string, deleted: boolean = false) {
-    let params = this.G.getParams(this.update, arguments);
 		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.post<any>(this.G.link.info_add, params, this.G.getHttpOptions()).subscribe(
+				this.httpClient.post<any>(this.G.link.info_add, {libelle, deleted}, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {
@@ -59,7 +58,7 @@ export class InformationAdditionnelleService {
     
     return new Promise(
 			(resolve, reject) => {
-				this.httpClient.put<any>(this.G.link.info_add + id + '/', params, this.G.getHttpOptions()).subscribe(
+				this.httpClient.put<any>(this.G.link.info_add + id + '/', {libelle, deleted}, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {

@@ -1,34 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GService {
-  private API_URL = '';
+  private API_URL = 'http://127.0.0.1:8000/coronaApp/';
 
   link: any = {
-    analyse: this.API_URL + '',
-    choix: this.API_URL + '',
-    classification: this.API_URL + '',
-    consigne: this.API_URL + '',
-    info_add: this.API_URL + '',
-    maladie: this.API_URL + '',
-    profile: this.API_URL + '',
-    question: this.API_URL + '',
-    reponse: this.API_URL + '',
-    rep_add: this.API_URL + '',
-    type_consigne: this.API_URL + '',
-    type_user: this.API_URL + '',
-    user: this.API_URL + '',
-    temperature: this.API_URL + '',
-    login: this.API_URL + '',
-    register: this.API_URL + '',
+    analyse: this.API_URL + 'analyses/',
+    choix: this.API_URL + 'choixs/',
+    classification: this.API_URL + 'classifications/',
+    consigne: this.API_URL + 'consignes/',
+    info_add: this.API_URL + 'infoadditionnelles/',
+    maladie: this.API_URL + 'maladies/',
+    profile: this.API_URL + 'profiles/',
+    question: this.API_URL + 'questions/',
+    reponse: this.API_URL + 'reponses/',
+    rep_add: this.API_URL + 'repadditionnelles/',
+    type_consigne: this.API_URL + 'typeconsignes/',
+    type_user: this.API_URL + 'typeusers/',
+    user: this.API_URL + 'users/',
+    type_rep: this.API_URL + 'typereponses/',
+    symptomes: this.API_URL + 'symptomes/'
   }
 
+  TypeTime = {
+    annee: 1,
+    mois: 2,
+    jour: 3 | 0,
+    heure: 4,
+    minute: 5,
+    seconde: 6,
+    milliseconde: 7
+  };
 
-  constructor(private titleService: Title) {
+  constructor(
+    private titleService: Title,
+    private cookie: CookieService,
+  ) {
 		this.setTitle('Fight corona');
 	}
 
@@ -36,7 +48,7 @@ export class GService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.token,
+        // 'Authorization': 'Bearer ' + localStorage.token,
       })
     };
 
@@ -74,5 +86,72 @@ export class GService {
     });
 
     return params;
+  }
+
+  public encrypt(str: string) {
+    return str;
+  }
+
+  public decrypt(str: string) {
+    return str;
+  }
+
+  public setCookie(name: string, value: string, expired: { nb: number; unite: number } = { nb: 7, unite: 3 }, path = '/'): void {
+    try {
+      this.cookie.set(name, value, this.setExpired(expired.nb, expired.unite), path, '', false, 'Lax');
+    } catch (e) {
+      console.log('Erreur rencontrée au niveau du cookie:', e);
+    }
+  }
+
+  public getCookie(name: string = null): any {
+    // retourne le cookie dont le nom est passé en paramètre ou tout les cookies si rien n'est passé en argument
+    return name == null ? this.cookie.getAll() : this.cookie.get(name);
+  }
+
+  public removeCookie(name: string = null, path = '/'): void {
+    // supprime le cookie dont le nom est passé en paramètre ou tout les cookies si rien n'est passé en argument
+    if (name != null) {
+      this.cookie.delete(name, path);
+    } else {
+      this.cookie.deleteAll(path);
+    }
+  }
+
+  private setExpired(nb: number = 7, unite: number = 3): Date {
+    // renvoie la date d'expiration(bien formatée) des cookies(par défaut ce sera  7 jours) en tenant compte de l'unité de temps envoyé (année=1, mois=2, jours=3, heure=4, minute=5, seconde=6, milliseconde=7)
+    let now = Date.now();
+    let annee = new Date(now).getUTCFullYear();
+    let bix =
+      annee % 400 == 0 || (annee % 4 == 0 && annee % 100 != 0) ? 366 : 365; // année bissextile ou pas, si oui 366 sinon 365
+    switch (unite) {
+      case this.TypeTime.annee:
+        return new Date(now + 3600 * 24 * bix * nb * 1000);
+        break;
+      case this.TypeTime.mois:
+        return new Date(now + 3600 * 24 * 30 * nb * 1000); // on suppose qu'un mois fait 30 jours ici
+        break;
+      case this.TypeTime.heure:
+        return new Date(now + 3600 * nb * 1000);
+        break;
+      case this.TypeTime.minute:
+        return new Date(now + 60 * nb * 1000);
+        break;
+      case this.TypeTime.seconde:
+        return new Date(now + nb * 1000);
+        break;
+      case this.TypeTime.milliseconde:
+        return new Date(now + nb);
+        break;
+      default:
+        // alert(new Date(now + (3600 * 24 * nb)));
+        return new Date(now + 3600 * 24 * nb * 1000);
+        break;
+    }
+  }
+
+  public regexTel(str: string): boolean {
+    let phoneReg = /^([0-9]{8,8})$/;
+    return phoneReg.test(str);
   }
 }

@@ -1,1 +1,92 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over">
+    <mat-nav-list>
+      <h2 matSubheader> STOP CORONA </h2>
+      <a *ngFor="let item of menuListe" mat-list-item (click)="sidenav.close()" [routerLink]="[item.route]"
+        routerLinkActive="list-item-active">
+        <mat-icon matListIcon *ngIf="item.color" [ngStyle]="{'color': item.color}"> {{ item.icon }} </mat-icon>
+        <mat-icon matListIcon *ngIf="!item.color"> {{ item.icon }} </mat-icon>
+        {{item.title}}
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" style="background-color: darkred;">
+      <mat-toolbar-row>
+        <button mat-icon-button *ngIf='logged' (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span> STOP CORONA ! </span>
+        <div fxFlex fxLayout fxLayoutAlign="flex-end">
+          <ul fxLayout fxLayoutGap="20px" style="list-style: none;">
+            <li fxHide.xs *ngIf='logged'>
+              <button mat-icon-button>
+                <mat-icon>settings</mat-icon>
+              </button>
+            </li>
+            <li fxHide.xs>
+              <button mat-icon-button>
+                <mat-icon>help_outline</mat-icon>
+              </button>
+            </li>
+            <li *ngIf='logged'>
+              <a routerLink="/quiz"><button mat-icon-button>
+                  <mat-icon>add</mat-icon>
+                </button></a>
+            </li>
+            <li>
+              <button mat-icon-button [matMenuTriggerFor]="auth">
+                <mat-icon>person_outline</mat-icon>
+              </button>
+              <mat-menu #auth="matMenu">
+                <a routerLink="/superdashboard"><button mat-menu-item>
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Super dashboard</span>
+                  </button>
+                </a><a routerLink="/dashboard"><button mat-menu-item>
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Dashboard</span>
+                  </button>
+                </a>
+                <a routerLink="/quiz"><button mat-menu-item>
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Quiz</span>
+                  </button>
+                </a>
+                <a routerLink="/account"><button mat-menu-item>
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Compte</span>
+                  </button>
+                </a>
+                <a routerLink="/emergency"><button mat-menu-item>
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Urgence</span>
+                  </button>
+                </a>
+                <a routerLink="/analyse-details"><button mat-menu-item>
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Analyse détaillée</span>
+                  </button>
+                </a>
+                <a routerLink="/login"><button mat-menu-item>
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Se déconnecter</span>
+                  </button>
+                </a>
+              </mat-menu>
+            </li>
+          </ul>
+        </div>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+<footer style="background-color: darkred; color: whitesmoke; padding-top: 5px; padding-bottom: 5px;">
+  <div id="btmFooter">
+    <p align="center">Réalisé par des <strong>Jeunes Entrepreneurs Solidaires...</strong> <span style="float: right;"
+        (click)="login()">Connexion rapide</span></p>
+  </div>
+</footer>
