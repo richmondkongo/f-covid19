@@ -1,32 +1,30 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DoctorDashComponent } from './doctor-dash/doctor-dash.component';
-import { QuizLayoutComponent } from './quiz-layout/quiz-layout.component';
 import { EmergencyLayoutComponent } from './emergency-layout/emergency-layout.component';
-import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { CoronaLoginComponent } from './corona-login/corona-login.component';
-import { UserDashComponent } from './user-dash/user-dash.component';
 import { AnalyseDetailsComponent } from './analyse-details/analyse-details.component';
-import { TesteurComponent } from './testeur/testeur.component';
+import { DoctorsListComponent } from './doctors-list/doctors-list.component';
+import { PatientsListComponent } from './patients-list/patients-list.component';
+import { CoronaQuizComponent } from './corona-quiz/corona-quiz.component';
+import { LoggedService } from './_guard/logged.service';
+import { MedecinService } from './_guard/medecin.service';
 
 
 const routes: Routes = [
-  { path: 'superdashboard', component: DoctorDashComponent},
-  { path: 'dashboard', component: UserDashComponent},
+  { path: 'superdashboard', canActivate: [LoggedService, MedecinService], component: DoctorsListComponent},
+  { path: 'analyse', canActivate: [LoggedService], component: PatientsListComponent},
+  { path: 'medecin-analyse/:id', canActivate: [LoggedService, MedecinService], component: PatientsListComponent},
   { path: 'login', component: CoronaLoginComponent},
-  { path: 'quiz',component: QuizLayoutComponent}, 
-  { path: 'account',component: ProfilePageComponent},
-  { path: 'emergency',component: EmergencyLayoutComponent},
-  { path: '',redirectTo:'/login', pathMatch: 'full'},
-  { path: 'accueil',redirectTo:'/dashboard', pathMatch: 'full'},
-  { path: 'logout',redirectTo:'/login/false', pathMatch: 'full'},
-  { path: 'analyse-details',component: AnalyseDetailsComponent},
-  { path: 't', component: TesteurComponent },
-
+  { path: 'login/:medecin', component: CoronaLoginComponent},
+  { path: 'quiz', canActivate: [LoggedService], component: CoronaQuizComponent},
+  { path: 'emergency', component: EmergencyLayoutComponent},
+  { path: '',redirectTo:'/analyse', pathMatch: 'full'},
+  { path: 'analyse-details', canActivate: [LoggedService], component: AnalyseDetailsComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }

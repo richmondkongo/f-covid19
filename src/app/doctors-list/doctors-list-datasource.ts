@@ -8,23 +8,12 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 export interface DoctorsListItem {
   name: string;
   id: number;
-  date?:string;
-  heure?:string;
+  contact?:string;
+  // heure?:string;
 }
 
 // TODO: replace this with real data from your application
-const EXAMPLE_DATA: DoctorsListItem[] = [
-  {id: 1, name: 'Adopo jordan', date:'Hier',heure:'15h00'},
-  {id: 2, name: 'kouame yoel', date:'Hier',heure:'09h50'},
-  {id: 3, name: 'Etty Foule' , date:'Avant-hier',heure:'13h07'},
-  {id: 4, name: 'Yeo Caudanna' , date:'20-03-2020',heure:'17h12'},
-  {id: 5, name: 'Ahissan Samuel' , date:'20-03-2020',heure:'08h00'},
-  {id: 6, name: 'Sapohi liline', date:'19-03-2020',heure:'15h00'},
-  {id: 7, name: 'Assi Arlette', date:'19-03-2020',heure:'09h50'},
-  {id: 8, name: 'Ouohi Anselme' , date:'18-03-2020',heure:'13h07'},
-  {id: 9, name: 'Tacka Walter' , date:'17-03-2020',heure:'17h12'},
-  {id: 10, name: 'Abdallah Hakim' , date:'17-03-2020',heure:'08h00'},
-];
+
 
 /**
  * Data source for the DoctorsList view. This class should
@@ -32,21 +21,24 @@ const EXAMPLE_DATA: DoctorsListItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class DoctorsListDataSource extends DataSource<DoctorsListItem> {
-  data: DoctorsListItem[] = EXAMPLE_DATA;
+  data: DoctorsListItem[] = [];
   paginator: MatPaginator;
   sort: MatSort;
 
-  constructor() {
+  constructor(data_sended: DoctorsListItem[]=[]) {
     super();
+    if (data_sended.length > 0)
+      this.data = data_sended;
+
   }
 
   /**
-   * Connect this data source to the table. The table will only update when
+   * Connect this data source to the table. The table will only upcontact when
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<DoctorsListItem[]> {
-    // Combine everything that affects the rendered data into one update
+    // Combine everything that affects the rendered data into one upcontact
     // stream for the data-table to consume.
     const dataMutations = [
       observableOf(this.data),
@@ -88,8 +80,8 @@ export class DoctorsListDataSource extends DataSource<DoctorsListItem> {
       switch (this.sort.active) {
         case 'name': return compare(a.name, b.name, isAsc);
         case 'id': return compare(+a.id, +b.id, isAsc);
-        case 'date': return compare(a.date, b.date, isAsc);
-        case 'heure': return compare(+a.heure, +b.heure, isAsc);
+        case 'contact': return compare(a.contact, b.contact, isAsc);
+        // case 'heure': return compare(+a.heure, +b.heure, isAsc);
         default: return 0;
       }
     });

@@ -49,22 +49,26 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializers
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['username']
+    filterset_fields = ['id','username']
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializers
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['user']
+    filterset_fields = ['user', 'type_user', 'maladie', 'numero', 'classe']
 
 class TypeUserViewSet(viewsets.ModelViewSet):
     queryset = TypeUser.objects.all()
     serializer_class = TypeUserSerializers
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['libelle']
 
 class ClassificationViewSet(viewsets.ModelViewSet):
     queryset = Classification.objects.all()
     serializer_class = ClassificationSerializers
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id']
 
 class InfoAddViewSet(viewsets.ModelViewSet):
     queryset = InformationAdittionnelle.objects.all()
@@ -74,7 +78,7 @@ class RepAddViewSet(viewsets.ModelViewSet):
     queryset = ReponseAdittionnelle.objects.all()
     serializer_class = RepAddSerializers
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['user']
+    filterset_fields = ['user', 'analyse', 'question']
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -99,7 +103,7 @@ class ChoixViewSet(viewsets.ModelViewSet):
     queryset = Choix.objects.all()
     serializer_class = ChoixSerializers
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['analyse']
+    filterset_fields = ['analyse', 'question']
 
 class TypeConsigneViewSet(viewsets.ModelViewSet):
     queryset = TypeConsigne.objects.all()
@@ -117,10 +121,11 @@ class MaladieViewSet(viewsets.ModelViewSet):
 
 
 class AnalyseViewSet(viewsets.ModelViewSet):
-    queryset = Analyse.objects.all()
+    ordered_tasks = Analyse.objects.order_by('created_at')
+    queryset = Analyse.objects.all().order_by('-created_at')
     serializer_class = AnalyseSerializers
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['user']
+    filterset_fields = ['user', 'classification', 'maladie', 'medecin', 'validation']
 
 class TypeReponseViewSet(viewsets.ModelViewSet):
     queryset = TypeReponse.objects.all()
@@ -130,5 +135,4 @@ class SymptomeViewSet(viewsets.ModelViewSet):
     queryset = Symptome.objects.all()
     serializer_class = SymptomeSerializers
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['maladie']
-    filterset_fields = ['question']
+    filterset_fields = ['maladie', 'question']

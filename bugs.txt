@@ -1,0 +1,1 @@
+bug 4 : revoir l'affichage chez le docteur : et eviter d'afficher les consignes prescriptes

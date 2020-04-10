@@ -12,20 +12,6 @@ export interface PatientsListItem {
   heure?:string;
 }
 
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: PatientsListItem[] = [
-  {id: 1, etat: 'RAS', date:'Hier',heure:'15h00'},
-  {id: 2, etat: 'RAS', date:'Hier',heure:'09h50'},
-  {id: 3, etat: 'Suspect' , date:'Avant-hier',heure:'13h07'},
-  {id: 4, etat: 'Malade' , date:'20-03-2020',heure:'17h12'},
-  {id: 5, etat: 'RAS' , date:'19-03-2020',heure:'08h00'},
-  {id: 6, etat: 'RAS', date:'18-03-2020',heure:'15h00'},
-  {id: 7, etat: 'RAS', date:'18-03-2020',heure:'09h50'},
-  {id: 8, etat: 'Suspect' , date:'17-03-2020',heure:'13h07'},
-  {id: 9, etat: 'Malade' , date:'16-03-2020',heure:'17h12'},
-  {id: 10, etat: 'RAS' , date:'16-03-2020',heure:'08h00'},
-  
-];
 
 /**
  * Data source for the PatientsList view. This class should
@@ -33,12 +19,15 @@ const EXAMPLE_DATA: PatientsListItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class PatientsListDataSource extends DataSource<PatientsListItem> {
-  data: PatientsListItem[] = EXAMPLE_DATA;
+  data: PatientsListItem[] = [];
   paginator: MatPaginator;
   sort: MatSort;
 
-  constructor() {
+  constructor(data_sended: PatientsListItem[]=[]) {
     super();
+    if (data_sended.length > 0) {
+      this.data = data_sended
+    } 
   }
 
   /**

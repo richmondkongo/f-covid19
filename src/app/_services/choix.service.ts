@@ -19,13 +19,13 @@ export class ChoixService {
 					}
 				)
 			}
-		);
+		); 
 	}
 
-	public readById(id: string) {
+	public readBy(filter: string, value: string|number) {
 		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.get<any>(this.G.link.choix + '?id=' + id, this.G.getHttpOptions()).subscribe(
+				this.httpClient.get<any>(this.G.link.choix + `?${filter}=${value}`, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {

@@ -25,7 +25,7 @@ SECRET_KEY = '$e=i5ylfbs3m6!5hque!&_s)v9^h$fx4yxnyrqp#gp@_$qwezd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-FR'
 
 TIME_ZONE = 'UTC'
 
@@ -139,11 +139,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/photo/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'photo')
 
-CORS_ORIGIN_ALLOW_ALL = False
+# CORS_ORIGIN_ALLOW_ALL = True
 
+CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
+    'http://192.168.1.108:8000',
+    'http://192.168.1.104:8000',
     'http://localhost:8000',
     'http://localhost:3000',
     'http://localhost:8000',
+    'http://localhost:4200',
     'http://127.0.0.1:3000',
+    'http://127.0.0.1:4200',
 ]

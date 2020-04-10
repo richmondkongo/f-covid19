@@ -10,10 +10,10 @@ export class ConsigneService {
   
   constructor(private G: GService, private httpClient: HttpClient,) { }
 
-  public read() {
+  public read(filter: string = '') {
 		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.get<any>(this.G.link.consigne, this.G.getHttpOptions()).subscribe(
+				this.httpClient.get<any>(this.G.link.consigne + filter, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {
@@ -23,20 +23,6 @@ export class ConsigneService {
 			}
 		);
 	} 
-
-	public readById(id: string) {
-		return new Promise(
-			(resolve, reject) => {
-				this.httpClient.get<any>(this.G.link.consigne + '?id=' + id, this.G.getHttpOptions()).subscribe(
-					(res) => {
-						resolve(res);
-					}, (err) => {
-						reject(err);
-					}
-				)
-			}
-		);
-	}
 
 	public create(type_consigne: number, libelle: string, maladie: number, explication: string, deleted: boolean = false) {
     let params = this.G.getParams(this.update, arguments);

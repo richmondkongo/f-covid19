@@ -7,7 +7,9 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class GService {
-  private API_URL = 'http://127.0.0.1:8000/coronaApp/';
+
+  private API_URL = 'http://localhost:8000/coronaApp/';
+  // private API_URL = 'http://192.168.1.108:8000/coronaApp/';
 
   link: any = {
     analyse: this.API_URL + 'analyses/',
@@ -59,7 +61,7 @@ export class GService {
     // permet de mettre un titre au site (dans l'inglet)
     this.titleService.setTitle(newTitle);
   }
-  
+
   public getParams(func: any, arg: any): any {
     /*
      *
@@ -154,4 +156,8 @@ export class GService {
     let phoneReg = /^([0-9]{8,8})$/;
     return phoneReg.test(str);
   }
+
+  public no_accent (str: string): string {
+		return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase()
+	}
 }

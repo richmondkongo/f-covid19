@@ -1,36 +1,183 @@
-<div >
-  <mat-card-title color="primary" style="width: 100%; text-align: center;">
-    Listes des patients infectés
-  </mat-card-title>
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">{{row.id}}</td>
-    </ng-container>
+<div class="grid-container">
+  <h1 class="mat-h1">Tableau de bord</h1>
+  <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-tile *ngFor="let card of cards | async, let i=index" [colspan]="card.cols" [rowspan]="card.rows">
+      <div class="dashboard-card " *ngIf="i!=1 && i!=2 && i!=3">
+        <div>
+          <div>
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item>Expand</button>
+              <button mat-menu-item>Remove</button>
+            </mat-menu>
+          </div>
+        </div>
+        <div class="dashboard-card-content">
+          <div class="container-fluid" *ngIf="i!=1 && i!=2 && i!=3">
+            <div class="row">
+              <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                <div class="card pull-up ">
+                  <div class="card-content ">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                          <i class="la la-user-md font-large-2 success"></i>
+                        </div>
+                        <div class="media-body text-right ">
+                          <h5 class="text-bold-500 text-primary">Total des analyses traitées</h5>
+                          <h3 class="text-bold-600 text-primary">{{ stat.totalAna }}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                <div class="card pull-up">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                          <i class="la la-stethoscope font-large-2 warning"></i>
+                        </div>
+                        <div class="media-body text-right">
+                          <h5 class="text-bold-500 text-success">Total des analyses validées</h5>
+                          <h3 class="text-bold-600 text-success">{{ stat.totalVal }}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                <div class="card pull-up">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                          <i class="la la-calendar-check-o font-large-2 info"></i>
+                        </div>
+                        <div class="media-body text-right">
+                          <h5 class=" text-bold-500 text-danger">Total des analyses traitées aujourd'hui</h5>
+                          <h3 class="text-bold-600 text-danger">{{ stat.totalAnaTdy }}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-6 col-12">
+                <div class="card pull-up bg-danger">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                          <i class="la la-bed font-large-2 danger"></i>
+                        </div>
+                        <div class="media-body text-right">
+                          <h5 class="text-bold-500 text-light">Total des analyses validées aujourd'hui</h5>
+                          <h3 class="text-bold-600 text-light">{{ stat.totalValTdy }}</h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section *ngIf="profile != null && profile?.count > 0; else vide">
+        <div *ngIf="i==1" class="dashboard-card mat-elevation-z8" style="overflow: scroll;">
+          <div>
+            <mat-card-title color="primary" style="width: 100%; text-align: center;">
+              Listes des patients infectés
+            </mat-card-title>
+            <table mat-table class="full-width-table" matSort aria-label="Elements">
+              <!-- Id Column -->
+              <!-- <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+                <td mat-cell *matCellDef="let row">{{row.id}}</td>
+              </ng-container> -->
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let row">{{row.name}}</td>
-    </ng-container>
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
-      <td mat-cell *matCellDef="let row">{{row.date}}</td>
-    </ng-container>
-    <ng-container matColumnDef="heure">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>heure</th>
-      <td mat-cell *matCellDef="let row">{{row.heure}}</td>
-    </ng-container>
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom complet</th>
+                <td mat-cell *matCellDef="let row">{{row.name}}</td>
+              </ng-container>
+              <ng-container matColumnDef="contact">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact</th>
+                <td mat-cell *matCellDef="let row">{{row.contact}}</td>
+              </ng-container>
+              <!-- <ng-container matColumnDef="heure">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>heure</th>
+                <td mat-cell *matCellDef="let row">{{row.heure}}</td>
+              </ng-container> -->
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewQuestRep(row)"
+                (dblclick)="viewAllAna(row)"></tr>
+            </table>
 
-  <mat-paginator #paginator
-      [length]="dataSource?.data.length"
-      [pageIndex]="0"
-      [pageSize]="50"
-      [pageSizeOptions]="[25, 50, 100, 250]">
-  </mat-paginator>
+            <mat-paginator #paginator [length]="dataSource?.data.length" [pageIndex]="0" [pageSize]="50"
+              [pageSizeOptions]="[25, 50, 100, 250]">
+            </mat-paginator>
+          </div>
+        </div>
+        <div *ngIf="i==2" class="dashboard-card mat-elevation-z8" style="padding: 15px;">
+          <!-- <h3>Résultats de l'analyse du patient sélectionné:</h3><br /><br />
+        <h5>1. Avez-vous de la fièvre ?</h5><br />
+        <mat-checkbox [checked]="true">Oui</mat-checkbox><br />
+        <mat-checkbox>Non</mat-checkbox><br /><br />
+
+
+        <h5>2. Si vous avez une toux, est-elle sèche ?</h5><br />
+        <mat-checkbox>Oui</mat-checkbox><br />
+        <mat-checkbox [checked]="true">Non</mat-checkbox><br /><br />
+
+        <h5>3. Avez-vous des difficultés à respirer ?</h5><br />
+        <mat-checkbox [checked]="true">Oui</mat-checkbox><br />
+        <mat-checkbox>Non</mat-checkbox><br /><br />
+
+
+        <h5>4. Etes-vous beaucoup fatigué ?</h5><br />
+        <mat-checkbox>Oui</mat-checkbox><br />
+        <mat-checkbox [checked]="true">Non</mat-checkbox><br /><br /> -->
+          <app-analyse-details [changer]="changer"></app-analyse-details>
+        </div>
+        <div *ngIf="i==3" class="dashboard-card mat-elevation-z8" style="padding: 15px;">
+          <h3>Patient(e) sélectionné(e):</h3><br /><br />
+          <h5>Nom: <strong>{{ patient?.user.first_name }}</strong></h5><br />
+          <h5>Prénom: <strong>{{ patient?.user.last_name }}</strong></h5><br />
+          <h5>Numéro: <strong>{{ patient?.numero }}</strong></h5><br />
+          <!-- <h5>Localité: <strong>Abidjan, Cocody-Angré</strong></h5><br /> -->
+          <div class="col-md-12" style="text-align: end;">
+            <br />
+            <div class="row">
+              <div class="col-6">
+                <button mat-raised-button style="min-width: 100%; background-color: darkred;" color="accent"
+                  type="button" (click)="validation(0)">Invalider l'analyse</button>
+              </div>
+              <div class="col-6">
+                <button mat-raised-button style="min-width: 100%; background-color: green;" color="accent" type="button"
+                  (click)="validation(1)">Valider l'analyse</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <ng-template #vide>
+        <div *ngIf="i==0">
+          <mat-toolbar>
+            <mat-toolbar-row>
+              <h1 style="width: 100%; color: darkred; text-align: center;">Vous n'avez pas d'analyse pour le moment.
+              </h1>
+            </mat-toolbar-row>
+          </mat-toolbar>
+        </div>
+      </ng-template>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

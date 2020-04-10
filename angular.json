@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "AntiCorona"
+  "defaultProject": "AntiCorona",
+  "cli": {
+    "analytics": "3525a0b3-45d3-4b16-828d-6f4e254e99e5"
+  }
 }

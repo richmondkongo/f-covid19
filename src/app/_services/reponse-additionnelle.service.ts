@@ -10,10 +10,10 @@ export class ReponseAdditionnelleService {
 
 	constructor(private G: GService, private httpClient: HttpClient, ) { }
 
-	public read() {
-		return new Promise(
+	public read(filter: string='') {
+		return new Promise( 
 			(resolve, reject) => {
-				this.httpClient.get<any>(this.G.link.rep_add, this.G.getHttpOptions()).subscribe(
+				this.httpClient.get<any>(this.G.link.rep_add + filter, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {
@@ -24,10 +24,10 @@ export class ReponseAdditionnelleService {
 		);
 	}
 
-	public readById(id: string) {
+	public create(user: number, question: string, valeur: string, analyse: string=null, deleted: boolean = false) {
 		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.get<any>(this.G.link.rep_add + '?id=' + id, this.G.getHttpOptions()).subscribe(
+				this.httpClient.post<any>(this.G.link.rep_add, {user, question, valeur, analyse, deleted}, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {
@@ -38,24 +38,10 @@ export class ReponseAdditionnelleService {
 		);
 	}
 
-	public create(user: number, question: string, valeur: string, deleted: boolean = false) {
+	public update(id: number, user: number, question: string, valeur: string, analyse: string=null, deleted: boolean = false) {
 		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.post<any>(this.G.link.rep_add, {user, question, valeur, deleted}, this.G.getHttpOptions()).subscribe(
-					(res) => {
-						resolve(res);
-					}, (err) => {
-						reject(err);
-					}
-				)
-			}
-		);
-	}
-
-	public update(id: number, user: number, question: string, valeur: string, deleted: boolean = false) {
-		return new Promise(
-			(resolve, reject) => {
-				this.httpClient.put<any>(this.G.link.rep_add + id + '/', {user, question, valeur, deleted}, this.G.getHttpOptions()).subscribe(
+				this.httpClient.put<any>(this.G.link.rep_add + id + '/', {user, question, valeur, analyse, deleted}, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
 					}, (err) => {

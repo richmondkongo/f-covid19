@@ -24,13 +24,13 @@ export class ClassificationService {
 		);
 	}
 
-	public readById(id: string) {
+	public readBy(filter: string, value: string|number) {
 		return new Promise(
 			(resolve, reject) => {
-				this.httpClient.get<any>(this.G.link.classification + '?id=' + id, this.G.getHttpOptions()).subscribe(
+				this.httpClient.get<any>(this.G.link.classification + `?${filter}=${value}`, this.G.getHttpOptions()).subscribe(
 					(res) => {
 						resolve(res);
-					}, (err) => {
+					}, (err) => { 
 						reject(err);
 					}
 				)

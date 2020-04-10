@@ -9,10 +9,10 @@ export class SymptomesService {
 
   constructor(private G: GService, private httpClient: HttpClient, ) { }
 
-  public read() {
+  public read(filter: string='') {
     return new Promise(
       (resolve, reject) => {
-        this.httpClient.get<any>(this.G.link.symptomes, this.G.getHttpOptions()).subscribe(
+        this.httpClient.get<any>(this.G.link.symptomes + filter, this.G.getHttpOptions()).subscribe(
           (res) => {
             resolve(res);
           }, (err) => {
@@ -51,18 +51,18 @@ export class SymptomesService {
     );
   }
 
-    public readByQuestion(id: string) {
-      return new Promise(
-        (resolve, reject) => {
-          this.httpClient.get<any>(this.G.link.symptomes + '?question=' + id, this.G.getHttpOptions()).subscribe(
-            (res) => {
-              resolve(res);
-            }, (err) => {
-              reject(err);
-            }
-          )
-        }
-      );
+  public readByQuestion(id: string) {
+    return new Promise(
+      (resolve, reject) => {
+        this.httpClient.get<any>(this.G.link.symptomes + '?question=' + id, this.G.getHttpOptions()).subscribe(
+          (res) => {
+            resolve(res);
+          }, (err) => {
+            reject(err);
+          }
+        )
+      }
+    );
   }
 
   public create(libelle: string, deleted: boolean = false) {

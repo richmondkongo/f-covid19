@@ -27,6 +27,7 @@ class Profile(BaseModel):
     localisation = models.CharField(max_length=255, blank=True, null=True)
     sexe = models.CharField(max_length=255, help_text="M/F", blank=True, null=True)
     type_user = models.ForeignKey(TypeUser, null=True, on_delete=models.CASCADE)
+    maladie = models.ForeignKey(Maladie, null=True, on_delete=models.CASCADE)
     classe = models.ForeignKey(Classification, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -35,10 +36,6 @@ class Profile(BaseModel):
 class InformationAdittionnelle(BaseModel):
     libelle = models.CharField(max_length=255, blank=True, null=True)
 
-class ReponseAdittionnelle(BaseModel):
-    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    question = models.ForeignKey(InformationAdittionnelle, null=True, on_delete=models.CASCADE)
-    valeur = models.CharField(max_length=255, blank=True, null=True)
 
 class TypeReponse(BaseModel):
     libelle = models.CharField(max_length=255, blank=True, null=True)
@@ -73,7 +70,12 @@ class Reponse(BaseModel):
 class Analyse(BaseModel):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     maladie = models.ForeignKey(Maladie, null=True, on_delete=models.CASCADE)
-    # classification = models.ForeignKey(Classification, null=True, on_delete=models.CASCADE)
+    classification = models.ForeignKey(Classification, null=True, on_delete=models.CASCADE)
+    score_maladie = models.IntegerField(null=True)
+    score_corona = models.IntegerField(null=True)
+    validation = models.IntegerField(null=True, default=-1)
+    medecin = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name='medecin')
+    # medecin = models.IntegerField(null=True)
 
 
 class Choix(BaseModel):
@@ -82,9 +84,11 @@ class Choix(BaseModel):
     #reponse = models.ForeignKey(Reponse, null=True, on_delete=models.CASCADE)
     valeur = models.CharField(max_length=255, blank=True, null=True)
 
+
 class TypeMedia(BaseModel):
     numero = models.IntegerField()
     libelle = models.CharField(max_length=255,  blank=True, null=True)
+
 
 class Media(BaseModel):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -95,8 +99,16 @@ class Media(BaseModel):
 class TypeConsigne(BaseModel):
     libelle = models.CharField(max_length=255, blank=True, null=True)
 
+
 class Consigne(BaseModel):
     type_consigne =  models.ForeignKey(TypeConsigne, null=True, on_delete=models.CASCADE)
     maladie = models.ForeignKey(Maladie, null=True, on_delete=models.CASCADE)
     libelle = models.CharField(max_length=255, blank=True, null=True)
     explication = models.CharField(max_length=255, blank=True, null=True)
+
+
+class ReponseAdittionnelle(BaseModel):
+    analyse = models.ForeignKey(Analyse, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    question = models.ForeignKey(InformationAdittionnelle, null=True, on_delete=models.CASCADE)
+    valeur = models.CharField(max_length=255, blank=True, null=True)

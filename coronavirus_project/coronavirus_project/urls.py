@@ -22,6 +22,7 @@ from django.conf import settings
 urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^coronaApp/', include('coronaApp.urls')),
+    url('', include('coronaApp.urls')),
     url(r'^api-auth/', include('rest_framework.urls')),
 ]
 
